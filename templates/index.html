@@ -15,37 +15,16 @@
     <h1 class="h1 text-center mx-auto mt-4 py-5"><strong>Найдите идеального <br>репетитора английского, <br>занимайтесь онлайн</strong></h1>
     <div class="text-center mb-5">
       <div class="btn-group mx-auto mb-0" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-secondary">⛱Для путешествий</button>
-        <button type="button" class="btn btn-outline-secondary">🏫 Для школы</button>
-        <button type="button" class="btn btn-outline-secondary">🏢 Для работы</button>
-        <button type="button" class="btn btn-outline-secondary">🚜 Для переезда</button>
+        <a href="/goals/travel/" type="button" class="btn btn-outline-secondary">⛱Для путешествий</a>
+        <a href="/goals/study/" type="button" class="btn btn-outline-secondary" >🏫 Для школы</a>
+        <a href="/goals/work/" type="button" class="btn btn-outline-secondary">🏢 Для работы</a>
+        <a href="/goals/relocate/" type="button" class="btn btn-outline-secondary">🚜 Для переезда</a>
       </div>
     </div>
     <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
-    <div class="row">
-      <div class="col-12 col-lg-10 offset-lg-1 m-auto">
 
-        {% for teacher in teachers | batch(6) | first %}
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-3"><img src="{{ teacher.picture }}" class="img-fluid" alt=""></div>
-                <div class="col-9">
-                  <p class="float-right">Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
-                  <h2 class="h5">{{ teacher.name }}</h2>
-                  <p>{{ teacher.about }}</p>
-                  <a href="/booking/{{ teacher.id }}/" class="btn btn-primary btn-sm mr-3 mb-2">Записаться на пробный урок</a>
-                  <a href="#" class="btn btn-outline-primary btn-sm mb-2">Отправить сообщение</a>
-                </div>
-              </div>
-            </div>
-          </div>
+      {% include 'teachers_cards.html' %}
 
-        {% endfor %}
-
-
-      </div>
-    </div>
   </main>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from data import teachers
+from data import teachers, goals
 
 app = Flask(__name__)
 
@@ -11,7 +11,8 @@ def index():
 
 @app.route("/goals/<goal>/")
 def goal_view(goal):
-    return render_template("goal.html", goal=goal)
+    return render_template("goal.html", goal=goal, goals=goals,
+                           teachers=teachers)
 
 
 @app.route("/profiles/<int:id>/")
