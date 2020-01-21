@@ -20,7 +20,7 @@
             <a class="nav-link" href="#">Все репетиторы</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Заявка на подбор</a>
+            <a class="nav-link" href="/request/">Заявка на подбор</a>
           </li>
         </ul>
       </div>
@@ -43,48 +43,26 @@
     <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
     <div class="row">
       <div class="col-12 col-lg-10 offset-lg-1 m-auto">
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-3"><img src="../static/pict 1.png" class="img-fluid" alt=""></div>
-              <div class="col-9">
-                <p class="float-right">Рейтинг: 4.8 Ставка: 1200 / час</p>
-                <h2 class="h5">Morris Simmmons</h2>
-                <p>Репетитор американского английского языка. Структурированная система обучения. Всем привет! Я предпочитаю называть себя «тренером» английского языка. Мои занятия похожи на тренировки</p>
-                <a href="#" class="btn btn-primary btn-sm mr-3 mb-2">Записаться на пробный урок</a>
-                <a href="#" class="btn btn-outline-primary btn-sm mb-2">Отправить сообщение</a>
+
+        {% for teacher in teachers | batch(6) | first %}
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-3"><img src="{{ teacher.picture }}" class="img-fluid" alt=""></div>
+                <div class="col-9">
+                  <p class="float-right">Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
+                  <h2 class="h5">{{ teacher.name }}</h2>
+                  <p>{{ teacher.about }}</p>
+                  <a href="/booking/{{ teacher.id }}/" class="btn btn-primary btn-sm mr-3 mb-2">Записаться на пробный урок</a>
+                  <a href="#" class="btn btn-outline-primary btn-sm mb-2">Отправить сообщение</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-3"><img src="../static/pict 2.png" class="img-fluid" alt=""></div>
-              <div class="col-9">
-                <p class="float-right">Рейтинг: 4.8 Ставка: 900 / час</p>
-                <h2 class="h5">Julie Nguyen</h2>
-                <p>Сертифицированный репетитор IELTS. Являюсь сертифицировнным CELTA преподавателем английского языка, проживающим за границей. Опыт работы в сфере преподавания - 9 лет.</p>
-                <a href="#" class="btn btn-primary btn-sm mr-3 mb-2">Записаться на пробный урок</a>
-                <a href="#" class="btn btn-outline-primary btn-sm mb-2">Отправить сообщение</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-3"><img src="../static/pict 3.png" class="img-fluid" alt=""></div>
-              <div class="col-9">
-                <p class="float-right">Рейтинг: 4.8 Ставка: 1300 / час</p>
-                <h2 class="h5">Wendy Edwards</h2>
-                <p>Молодой и современный репетитор и переводчик с четырёхлетним опытом работы репетиторства Индивидуальные занятия по скайпу, которые ведёт молодой специалист отделения "Перевода </p>
-                <a href="#" class="btn btn-primary btn-sm mr-3 mb-2">Записаться на пробный урок</a>
-                <a href="#" class="btn btn-outline-primary btn-sm mb-2">Отправить сообщение</a>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        {% endfor %}
+
+
       </div>
     </div>
   </main>

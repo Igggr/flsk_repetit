@@ -1,11 +1,12 @@
 from flask import Flask, render_template
+from data import teachers
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", teachers=teachers)
 
 
 @app.route("/goals/<goal>/")
@@ -23,7 +24,7 @@ def request_view():
     return render_template('pick.html')
 
 
-@app.route('/booking/<int:id>')
+@app.route('/booking/<int:id>/')
 def booking(id):
     return render_template("booking.html", id=id)
 
