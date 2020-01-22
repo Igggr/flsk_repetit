@@ -35,5 +35,12 @@ def teachers_for_goal(teachers, goal):
     return filter(lambda teacher: goal in teacher['goals'], teachers)
 
 
+@app.context_processor
+def utility_processor():
+    def is_free(teacher, day, hour):
+        return teacher['free'][day][hour]
+    return dict(is_free=is_free)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -43,56 +43,17 @@
             <th>Сб</th>
             <th>Вс</th>
           </tr>
-          <tr>
-            <td><span class="btn">8:00</span></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">8:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">8:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">8:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">8:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">8:00</a></td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td><span class="btn">10:00</span></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">10:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">10:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">10:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">10:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">10:00</a></td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td><span class="btn">12:00</span></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">12:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">12:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">12:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">12:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">12:00</a></td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td><span class="btn">14:00</span></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">14:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">14:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">14:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">14:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">14:00</a></td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td><span class="btn">16:00</span></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">16:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">16:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">16:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-success">16:00</a></td>
-            <td><a href="#" class="btn btn-sm btn-secondary">16:00</a></td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
+
+          {% for time in ("8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00") %}
+           <tr>
+            <td><span class="btn">{{ time.zfill(5) }}</span></td>
+            {% for day in teacher.free %}
+              <td><a href="#" class="btn btn-sm btn-{{ 'success' if is_free(teacher, day, time) else 'secondary' }}">
+              {{ time.zfill(5) }}</a></td>
+            {% endfor %}
+           </tr>
+          {% endfor %}
+
         </table>
       </div>
     </div>
