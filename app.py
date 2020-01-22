@@ -15,9 +15,9 @@ def goal_view(goal):
                            teachers=teachers)
 
 
-@app.route("/profiles/<int:id>/")
+@app.route("/profiles/<int:teacher_id>/")
 def profile(teacher_id):
-    return render_template("profile.html", id=teacher_id)
+    return render_template("profile.html", id=teacher_id, teachers=teachers)
 
 
 @app.route('/request/')
