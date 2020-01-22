@@ -10,11 +10,19 @@
 <body>
 
   {% include 'navigation.html' %}
+  {% set matched_teachers = teachers | teachers_for_goal(goal) | list %}
 
   <main class="container mt-3">
-    <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4"><strong>🚜<br />Преподаватели <br>{{ goals[goal] }}</strong></h1>
 
-    {% include 'teachers_cards.html' %}
+    <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4">
+      <img class = "w-25" src= "{{ url_for('static', filename = goal + '.png') }}">
+      <strong>🚜<br/>Преподаватели <br/>{{ goals[goal] }}</strong>
+      <br/><span class="font-weight-light text-muted">{{ matched_teachers | length }} преподавателей</span>
+    </h1>
+
+    {% with teachers = matched_teachers %}
+      {% include 'teachers_cards.html' %}
+    {% endwith %}
 
   </main>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

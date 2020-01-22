@@ -30,5 +30,10 @@ def booking(id):
     return render_template("booking.html", id=id)
 
 
+@app.template_filter()
+def teachers_for_goal(teachers, goal):
+    return filter(lambda teacher: goal in teacher['goals'], teachers)
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
