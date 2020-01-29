@@ -1,7 +1,13 @@
 from flask import Flask, render_template
-from data import teachers, goals
+import json
 
 app = Flask(__name__)
+app.config.from_object('config')
+
+with open("json_data/teachers.json", "r") as f:
+    teachers = json.load(f)
+with open("json_data/goals.json", "r") as f:
+    goals = json.load(f)
 
 
 @app.route("/")
@@ -43,4 +49,4 @@ def utility_processor():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
