@@ -48,7 +48,7 @@
            <tr>
             <td><span class="btn">{{ time.zfill(5) }}</span></td>
             {% for day in teacher.free %}
-              <td><a href="#" class="btn btn-sm btn-{{ 'success' if is_free(teacher, day, time) else 'secondary' }}">
+              <td><a href="/booking/{{id}}/{{ day }}/{{ time.split(':')[0] }}/" class="btn btn-sm btn-{{ 'success' if is_free(teacher, day, time) else 'secondary' }}">
               {{ time.zfill(5) }}</a></td>
             {% endfor %}
            </tr>

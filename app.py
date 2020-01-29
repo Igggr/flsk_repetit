@@ -9,6 +9,14 @@ with open("json_data/teachers.json", "r") as f:
 with open("json_data/goals.json", "r") as f:
     goals = json.load(f)
 
+days = {"mon": "Понедельник",
+        "tue": "Вторник",
+        "wed": "Среда",
+        "thu": "Четверг",
+        "fri": "Пятница",
+        "sat": "Суббота",
+        "sun": "Воскресенье"}
+
 
 @app.route("/")
 def index():
@@ -31,9 +39,23 @@ def request_view():
     return render_template('pick.html', goals=goals)
 
 
-@app.route('/booking/<int:id>/')
-def booking(id):
-    return render_template("booking.html", id=id)
+@app.route('/booking/<int:id>/<string:day>/<string:hour>/')
+def booking(id, day, hour):
+    return render_template("booking.html",
+                           teacher=teachers[id],
+                           time={"day": day, "hour": hour},
+                           days=days)
+
+
+@app.route("/booking_done/<string:day>/<string:hour>/", methods=["POST"])
+def booking_done(day, hour):
+    name = request.form["clientName"]
+    phone = request.form["clientPhone"]
+    return render_template("sent.html",
+                           title={"label": "Тема", "value": "Пробный урок"},
+                           time={"label": days[day], "value": f"{hour}:00"},
+                           name=name,
+                           phone=phone)
 
 
 @app.template_filter()
