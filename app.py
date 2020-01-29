@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 
 app = Flask(__name__)
@@ -28,7 +28,7 @@ def profile(teacher_id):
 
 @app.route('/request/')
 def request_view():
-    return render_template('pick.html')
+    return render_template('pick.html', goals=goals)
 
 
 @app.route('/booking/<int:id>/')
@@ -46,6 +46,21 @@ def utility_processor():
     def is_free(teacher, day, hour):
         return teacher['free'][day][hour]
     return dict(is_free=is_free)
+
+
+@app.route("/echo", methods=["POST"])
+def handle_request():
+    goal = request.form['goal']
+    time = request.form['time']
+    name = request.form['name']
+    phone = request.form['phone']
+    return render_template(
+        'sent.html',
+        title={"label": "Цель занятий", "value": goals[goal]},
+        time={"label": "Времени есть", "value": f"{time} часа в неделю"},
+        name=name,
+        phone=phone
+    )
 
 
 if __name__ == "__main__":
