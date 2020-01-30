@@ -14,9 +14,11 @@
       </div>
     </div>
     </section>
+    {% block cardblock %}
     <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
 
-    {{ cards(teachers | batch(6) | first ) }}
+    {{ cards(teachers | availiable_now | sort(attribute="rating", reverse=True) ) }}
+    {% endblock %}
 
   </main>
 {% endblock %}

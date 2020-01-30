@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import json
+import datetime
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -9,6 +10,7 @@ with open("json_data/teachers.json", "r") as f:
 with open("json_data/goals.json", "r") as f:
     goals = json.load(f)
 
+
 days = {"mon": "Понедельник",
         "tue": "Вторник",
         "wed": "Среда",
@@ -16,11 +18,17 @@ days = {"mon": "Понедельник",
         "fri": "Пятница",
         "sat": "Суббота",
         "sun": "Воскресенье"}
+week = [day for day in days]
 
 
 @app.route("/")
 def index():
     return render_template("index.html", teachers=teachers)
+
+
+@app.route("/all/")
+def index_all():
+    return render_template("all.html", teachers=teachers)
 
 
 @app.route("/goals/<goal>/")
@@ -63,6 +71,18 @@ def booking_done():
 @app.template_filter()
 def teachers_for_goal(teachers, goal):
     return filter(lambda teacher: goal in teacher['goals'], teachers)
+
+
+@app.template_filter()
+def availiable_now(teachers):
+    now = datetime.datetime.today()
+    day = week[now.weekday()]
+    hour = f"{ now.hour // 2 * 2}:00"
+
+    def is_free(teacher):
+        return teacher["free"][day][hour]
+
+    return [teacher for teacher in teachers if is_free(teacher)]
 
 
 @app.context_processor
