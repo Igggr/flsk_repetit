@@ -36,7 +36,7 @@ def profile(teacher_id):
 
 @app.route('/request/')
 def request_view():
-    return render_template('pick.html', goals=goals)
+    return render_template('request.html', goals=goals)
 
 
 @app.route('/booking/<int:id>/<string:day>/<string:hour>/')
@@ -53,7 +53,7 @@ def booking_done():
     phone = request.form["clientPhone"]
     day = request.form["day"]
     hour = request.form["hour"]
-    return render_template("sent.html",
+    return render_template("done.html",
                            title={"label": "Тема", "value": "Пробный урок"},
                            time={"label": days[day], "value": f"{hour}:00"},
                            name=name,
@@ -79,7 +79,7 @@ def handle_request():
     name = request.form['name']
     phone = request.form['phone']
     return render_template(
-        'sent.html',
+        'done.html',
         title={"label": "Цель занятий", "value": goals[goal]},
         time={"label": "Времени есть", "value": f"{time} часа в неделю"},
         name=name,
