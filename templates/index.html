@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{%  from 'teachers_cards.html' import cards  %}
+
 <html lang="ru">
 
 <head>
@@ -21,9 +23,10 @@
         <a href="/goals/relocate/" type="button" class="btn btn-outline-secondary">🚜 Для переезда</a>
       </div>
     </div>
+    </section>
     <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
 
-      {% include 'teachers_cards.html' %}
+    {{ cards(teachers | batch(6) | first ) }}
 
   </main>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

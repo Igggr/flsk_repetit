@@ -47,10 +47,12 @@ def booking(id, day, hour):
                            days=days)
 
 
-@app.route("/booking_done/<string:day>/<string:hour>/", methods=["POST"])
-def booking_done(day, hour):
+@app.route("/booking_done/", methods=["POST"])
+def booking_done():
     name = request.form["clientName"]
     phone = request.form["clientPhone"]
+    day = request.form["day"]
+    hour = request.form["hour"]
     return render_template("sent.html",
                            title={"label": "Тема", "value": "Пробный урок"},
                            time={"label": days[day], "value": f"{hour}:00"},
