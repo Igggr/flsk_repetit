@@ -61,6 +61,17 @@ def booking_done():
     phone = request.form["clientPhone"]
     day = request.form["day"]
     hour = request.form["hour"]
+    teacher_id = request.form["teacher_id"]
+
+    with open('json_data/booking.json', "r") as f:
+        bookings = json.load(f)
+
+    bookings.append({"student_name": name, "student_phone": phone,
+                     "day": day, "hour": hour, "teacher_id": teacher_id})
+
+    with open('json_data/booking.json', "w") as f:
+        json.dump(bookings, f)
+
     return render_template("done.html",
                            title={"label": "Тема", "value": "Пробный урок"},
                            time={"label": days[day], "value": f"{hour}:00"},
@@ -93,11 +104,21 @@ def utility_processor():
 
 
 @app.route("/echo", methods=["POST"])
-def handle_request():
+def request_done():
     goal = request.form['goal']
     time = request.form['time']
     name = request.form['name']
     phone = request.form['phone']
+
+    with open("json_data/request.json", "r") as f:
+        lesson_requests = json.load(f)
+
+    lesson_requests.append({"student_name": name, "student_phone": phone,
+                            "goal": goal, "time": time})
+
+    with open("json_data/request.json", "w") as f:
+        json.dump(lesson_requests, f)
+
     return render_template(
         'done.html',
         title={"label": "Цель занятий", "value": goals[goal]},
