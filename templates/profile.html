@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
+{% from 'teachers_cards.html' import teacher_link %}
 
-{% set teacher = teachers[id] %}
 {% block body %}
   <main class="container mt-3">
     <div class="card my-4 mx-auto">
@@ -11,7 +11,7 @@
             <h1 class="h2">{{ teacher.name }}</h1>
             <p>
               {% for goal in teacher.goals %}
-                <span class="badge badge-secondary mr-2">{{ goal }}</span>
+                <span class="badge badge-primary mr-2">{{ goal }}</span>
               {% endfor %}
               Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
             <p>{{ teacher.about }}</p>
@@ -36,8 +36,9 @@
            <tr>
             <td><span class="btn">{{ time.zfill(5) }}</span></td>
             {% for day in teacher.free %}
-              <td><a href="/booking/{{id}}/{{ day }}/{{ time.split(':')[0] }}/" class="btn btn-sm btn-{{ 'success' if is_free(teacher, day, time) else 'secondary' }}">
-              {{ time.zfill(5) }}</a></td>
+              <td>
+                {{ teacher_link(teacher, id, day, time, is_free) }}
+              </td>
             {% endfor %}
            </tr>
           {% endfor %}

@@ -37,7 +37,9 @@ def goal_view(goal):
 
 @blp.route("/profiles/<int:teacher_id>/")
 def profile(teacher_id):
-    return render_template("profile.html", id=teacher_id, teachers=teachers)
+    return render_template("profile.html",
+                           id=teacher_id,
+                           teacher=teachers[teacher_id])
 
 
 @blp.route('/booking/<int:id>/<string:day>/<string:hour>/')

@@ -21,3 +21,16 @@
       </div>
     </div>
 {%- endmacro %}
+
+
+{% macro teacher_link(teacher, id, day, time, is_free) -%}
+  {% if is_free(teacher, day, time) %}
+    <a href="/booking/{{id}}/{{ day }}/{{ time.split(':')[0] }}/" class="btn btn-sm btn-success" >
+      {{ time.zfill(5) }}
+    </a>
+  {% else %}
+   <a  class="btn btn-sm btn-secondary">
+     {{ time.zfill(5) }}
+   </a>
+  {% endif %}
+{%- endmacro %}
