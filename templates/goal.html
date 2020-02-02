@@ -2,17 +2,16 @@
 {%  from 'teachers_cards.html' import cards  %}
 
 {% block body %}
-  {% set matched_teachers = teachers | teachers_for_goal(goal) | list %}
 
   <main class="container mt-3">
 
     <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4">
       <img class = "w-25" src= "{{ url_for('static', filename = goal + '.png') }}">
       <strong>🚜<br/>Преподаватели <br/>{{ goals[goal] }}</strong>
-      <br/><span class="font-weight-light text-muted">{{ matched_teachers | length }} преподавателей</span>
+      <br/><span class="font-weight-light text-muted">{{ teachers | length }} преподавателей</span>
     </h1>
 
-      {{ cards( matched_teachers) }}
+      {{ cards( teachers) }}
 
   </main>
 {% endblock %}

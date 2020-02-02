@@ -1,6 +1,7 @@
 from flask import render_template, request, Blueprint
 from forms import NamePhoneForm, RequestMatchingTeacherForm
 import json
+import datetime
 
 
 blp = Blueprint('blp', __name__)
@@ -19,20 +20,40 @@ days = {"mon": "Понедельник",
         "sun": "Воскресенье"}
 
 
+def is_free_at_the_time(teacher, day, hour):
+    return teacher['free'][day][hour]
+
+
+def availiable_now(teacher):
+    week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+
+    now = datetime.datetime.today()
+    day = week[now.weekday()]
+    hour = f"{ now.hour // 2 * 2}:00"
+
+    return is_free_at_the_time(teacher, day, hour)
+
+
 @blp.route("/")         # покажет доступных сейчас учителей
 def index():
-    return render_template("index.html", teachers=teachers)
+    free_teachers = [t for t in teachers if availiable_now(t)]
+    free_teachers.sort(key=lambda t: t['rating'])
+
+    return render_template("index.html",
+                           teachers=free_teachers[:6])
 
 
 @blp.route("/all/")     # покажет всех учителей
 def index_all():
-    return render_template("all.html", teachers=teachers)
+    teachers.sort(key=lambda t: t['rating'])
+    return render_template("all.html", teachers=teachers[:6])
 
 
 @blp.route("/goals/<goal>/")
 def goal_view(goal):
+    goal_teachers = [t for t in teachers if goal in t['goals']]
     return render_template("goal.html", goal=goal, goals=goals,
-                           teachers=teachers)
+                           teachers=goal_teachers)
 
 
 @blp.route("/profiles/<int:teacher_id>/")
@@ -110,6 +131,4 @@ def request_done():
 
 @blp.context_processor
 def utility_processor():
-    def is_free(teacher, day, hour):
-        return teacher['free'][day][hour]
-    return dict(is_free=is_free)
+    return dict(is_free=is_free_at_the_time)
