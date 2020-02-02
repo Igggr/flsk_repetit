@@ -37,7 +37,7 @@ def availiable_now(teacher):
 @blp.route("/")         # покажет доступных сейчас учителей
 def index():
     free_teachers = [t for t in teachers if availiable_now(t)]
-    free_teachers.sort(key=lambda t: t['rating'])
+    free_teachers.sort(key=lambda t: -t['rating'])
 
     return render_template("index.html",
                            teachers=free_teachers[:6])
@@ -45,7 +45,7 @@ def index():
 
 @blp.route("/all/")     # покажет всех учителей
 def index_all():
-    teachers.sort(key=lambda t: t['rating'])
+    teachers.sort(key=lambda t: -t['rating'])
     return render_template("all.html", teachers=teachers[:6])
 
 

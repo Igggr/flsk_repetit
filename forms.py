@@ -25,10 +25,12 @@ class RequestMatchingTeacherForm(NamePhoneForm):
                                        ("study", "Для учебы"),
                                        ("work", "Для работы"),
                                        ("relocate", "Для переезда")
-                                       ])
+                                       ],
+                      default="travel")
 
     time = RadioField("time", choices=[("1-2", "1-2 часа в неделю"),
                                        ("3-5", "3-5 часов в неделю"),
                                        ("5-7", "5-7 часов в неделю"),
                                        ("7-10", "7-10 часов в неделю")
-                                       ])
+                                       ],
+                      default="1-2")
