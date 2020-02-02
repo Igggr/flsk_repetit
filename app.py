@@ -2,8 +2,11 @@ from flask import Flask, render_template, request
 import json
 import datetime
 
+from forms import NamePhoneForm, RequestMatchingTeacherForm
+
 app = Flask(__name__)
 app.config.from_object('config')
+app.secret_key = "secret"
 
 with open("json_data/teachers.json", "r") as f:
     teachers = json.load(f)
@@ -42,23 +45,27 @@ def profile(teacher_id):
     return render_template("profile.html", id=teacher_id, teachers=teachers)
 
 
-@app.route('/request/')
+@app.route('/request/', methods=["GET"])
 def request_view():
-    return render_template('request.html', goals=goals)
+    form = RequestMatchingTeacherForm()
+    return render_template('request.html', goals=goals, form=form)
 
 
 @app.route('/booking/<int:id>/<string:day>/<string:hour>/')
 def booking(id, day, hour):
+    form = NamePhoneForm()
     return render_template("booking.html",
                            teacher=teachers[id],
                            time={"day": day, "hour": hour},
-                           days=days)
+                           days=days,
+                           form=form
+                           )
 
 
 @app.route("/booking_done/", methods=["POST"])
 def booking_done():
-    name = request.form["clientName"]
-    phone = request.form["clientPhone"]
+    name = request.form["name"]
+    phone = request.form["phone"]
     day = request.form["day"]
     hour = request.form["hour"]
     teacher_id = request.form["teacher_id"]
@@ -103,7 +110,7 @@ def utility_processor():
     return dict(is_free=is_free)
 
 
-@app.route("/echo", methods=["POST"])
+@app.route("/echo/", methods=["POST"])
 def request_done():
     goal = request.form['goal']
     time = request.form['time']

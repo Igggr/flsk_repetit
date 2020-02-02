@@ -3,43 +3,36 @@
 {% block body %}
   <main class="container mt-5">
     <div class="col-12 col-sm-10 col-lg-6 offset-lg-3 offset-sm-1">
-      <form action="/echo" method="post" class="card mb-5">
+      <form action="{{ url_for('request_done') }}" method="post" class="card mb-5">
         <div class="card-body text-center pt-5">
+          {{ form.csrf_token }}
           <h1 class="h3 card-title mt-4 mb-2">Подбор преподавателя</h1>
-          <p class="px-5">Напишите, чего вам нужно и&nbsp;мы&nbsp;подберем отличных&nbsp;ребят</p>
+          <p class="px-5">Напишите, чего вам нужно и мы подберем отличных ребят</p>
         </div>
         <hr>
         <div class="card-body mx-3">
           <div class="row">
             <div class="col">
               <p>Какая цель занятий?</p>
-              {% for goal in goals -%}
-                {% set goal_id = "goal" ~ loop.index  %}
-                <div class="form-check ">
-                  <input type="radio" class="form-check-input" name="goal" value="{{ goal }}" id="{{ goal_id }}" {% if  loop.index == 1 %} checked {% endif %}>
-                  <label class="form-check-label" for="{{ goal_id }}">{{ goals[goal] }}</label>
-                </div>
-              {%- endfor %}
+              {{ form.goal(class_="form-check", style="list-style-type:none") }}
+              {#
+                 have no idea, how to set id and class for single goal. sorry))
+                 can do it only for element, containing all of them
+              #}
             </div>
             <div class="col">
               <p>Сколько времени есть?</p>
-              {% for time in ["1-2", "3-5", "5-7", "7-10"] -%}
-                 {% set time_id = "time" ~ loop.index %}
-                 <div class="form-check">
-                <input type="radio" class="form-check-input" name="time" value="{{ time }}" id="{{ time_id }}"  {% if  loop.index == 1 %} checked {% endif %}>
-                <label class="form-check-label" for="{{ time_id }}">{{ time }} часа в&nbsp;неделю</label>
-              </div>
-              {%- endfor %}
+              {{ form.time(class_="form-check", style="list-style-type:none")}}
             </div>
           </div>
         </div>
         <hr>
         <div class="card-body mx-3">
-          <label class="mb-1 mt-2">Вас зовут</label>
-          <input class="form-control" type="text" name="name" required placeholder="">
-          <label class="mb-1 mt-2">Ваш телефон</label>
-          <input class="form-control" type="text" name="phone" required placeholder="">
-          <input type="submit" class="btn btn-primary mt-4 mb-2" value="Найдите мне преподавателя">
+          {{ form.name.label(class_="mb-1 mt-2") }}
+          {{ form.name(class_="form-control") }}
+          {{ form.phone.label(class_="mb-1 mt-2") }}
+          {{ form.phone(class_="form-control") }}
+          {{ form.submit(class_="btn btn-primary mt-4 mb-2", value="Найдите мне преподавателя") }}
         </div>
       </form>
     </div>
