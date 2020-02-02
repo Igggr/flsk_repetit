@@ -8,8 +8,11 @@ class NamePhoneForm(FlaskForm):
                        validators=[DataRequired(message="заполни")])
     phone = StringField("Ваш телефон",
                         validators=[DataRequired(message="заполни"),
-                                    Length(min=6, message="должен быть > 5 символов")  # don't work
-                            ])
+                                    Length(min=6,
+                                           message="должен быть > 5 символов"
+                                           )  # length check don't work
+                                    ]
+                        )
     submit = SubmitField()
 
 

@@ -32,7 +32,7 @@
             <th>Вс</th>
           </tr>
 
-          {% for time in ("8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00") %}
+          {% for time in teacher['free']['mon'].keys(): %}
            <tr>
             <td><span class="btn">{{ time.zfill(5) }}</span></td>
             {% for day in teacher.free %}
