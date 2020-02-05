@@ -1,12 +1,29 @@
 from flask import Flask
-from blupr_teachers import blp
 import os
+from flask_migrate import Migrate
+from blupr_teachers import blp
+from models import db
 
-app = Flask(__name__)
-app.config.from_object('config')
-app.secret_key = os.environ.get('SECRET_KEY')
-app.register_blueprint(blp)
 
+def create_app():
+    app = Flask(__name__)
+
+    app.config.from_object('config')
+    app.secret_key = os.getenv('SECRET_KEY')
+
+    app.register_blueprint(blp)
+
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+
+    migrate = Migrate(app, db)
+
+    return app, migrate
+
+
+app, migrate = create_app()
 
 if __name__ == "__main__":
     app.run()
