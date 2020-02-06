@@ -11,7 +11,7 @@
             <h1 class="h2">{{ teacher.name }}</h1>
             <p>
               {% for goal in teacher.goals %}
-                <span class="badge badge-primary mr-2">{{ goal }}</span>
+                <span class="badge badge-primary mr-2">{{ goal.title }}</span>
               {% endfor %}
               Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
             <p>{{ teacher.about }}</p>
@@ -31,13 +31,12 @@
             <th>Сб</th>
             <th>Вс</th>
           </tr>
-
-          {% for time in teacher['free']['mon'].keys(): %}
+          {% for time in shedule['mon'].keys(): %}
            <tr>
             <td><span class="btn">{{ time.zfill(5) }}</span></td>
-            {% for day in teacher.free %}
+            {% for day in shedule %}
               <td>
-                {{ teacher_link(teacher, id, day, time, is_free) }}
+                {{ teacher_link(teacher, day, time, is_free) }}
               </td>
             {% endfor %}
            </tr>

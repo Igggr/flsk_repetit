@@ -11,7 +11,7 @@
                   <p class="float-right">Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
                   <h2 class="h5">{{ teacher.name }}</h2>
                   <p>{{ teacher.about }}</p>
-                  <a href="/profiles/{{ teacher.id }}/" class="btn btn-outline-primary btn-sm mb-2">Показать информацию и расписание</a>
+                  <a href="/profiles/{{ teacher.teacher_id }}/" class="btn btn-outline-primary btn-sm mb-2">Показать информацию и расписание</a>
                 </div>
               </div>
             </div>
@@ -23,9 +23,9 @@
 {%- endmacro %}
 
 
-{% macro teacher_link(teacher, id, day, time, is_free) -%}
+{% macro teacher_link(teacher, day, time, is_free) -%}
   {% if is_free(teacher, day, time) %}
-    <a href="/booking/{{id}}/{{ day }}/{{ time.split(':')[0] }}/" class="btn btn-sm btn-success" >
+    <a href="/booking/{{ teacher.teacher_id }}/{{ day }}/{{ time.split(':')[0] }}/" class="btn btn-sm btn-success" >
       {{ time.zfill(5) }}
     </a>
   {% else %}

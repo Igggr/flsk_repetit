@@ -53,7 +53,7 @@ class Goal(db.Model):
     lesson_requests = db.relationship("RequestLesson", back_populates="goal")
 
     def __repr__(self):
-        return f"Goal<id : {self.goal_id}, title: {self.title}"
+        return f"Goal<id : {self.goal_id}, title: {self.title}>"
 
 
 class RequestLesson(db.Model):
@@ -65,6 +65,12 @@ class RequestLesson(db.Model):
 
     goal = db.relationship("Goal", back_populates="lesson_requests")
 
+    def __repr__(self):
+        return f"RequestLesson<name: {self.student_name}," \
+               f"phone: {self.student_phone}, " \
+               f"time: {self.time_per_week}, " \
+               f"goal: {self.goal.title} >"
+
 
 class Booking(db.Model):
     booking_id = db.Column(db.Integer, primary_key=True)
@@ -75,3 +81,10 @@ class Booking(db.Model):
     student_phone = db.Column(db.String, nullable=False)
 
     teacher = db.relationship("Teacher", back_populates="bookings")
+
+    def __repr__(self):
+        return f"Booking<name: {self.student_name}," \
+               f"phone: {self.student_phone}," \
+               f"teacher: {self.teacher.name}," \
+               f"day: {self.day}," \
+               f"hour: {self.hour}"
