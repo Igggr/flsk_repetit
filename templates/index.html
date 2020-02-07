@@ -7,10 +7,16 @@
     <h1 class="h1 text-center mx-auto mt-4 py-5"><strong>Найдите идеального <br>репетитора английского, <br>занимайтесь онлайн</strong></h1>
     <div class="text-center mb-5">
       <div class="btn-group mx-auto mb-0" role="group" aria-label="Basic example">
+        {% for goal in goals %}
+           <a href="/goals/{{ goal.title }}/" type="button" class="btn btn-outline-secondary">⛱{{ goal.title_rus }}</a>
+        {% endfor %}
+
+{#
         <a href="/goals/travel/" type="button" class="btn btn-outline-secondary">⛱Для путешествий</a>
         <a href="/goals/study/" type="button" class="btn btn-outline-secondary" >🏫 Для школы</a>
         <a href="/goals/work/" type="button" class="btn btn-outline-secondary">🏢 Для работы</a>
         <a href="/goals/relocate/" type="button" class="btn btn-outline-secondary">🚜 Для переезда</a>
+        #}
       </div>
     </div>
     </section>

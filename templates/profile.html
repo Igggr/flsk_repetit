@@ -13,7 +13,7 @@
               {% for goal in teacher.goals %}
                 <span class="badge badge-primary mr-2">{{ goal.title }}</span>
               {% endfor %}
-              Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
+              Рейтинг: {{ teacher.short_rating }} Ставка: {{ teacher.price }} P / час</p>
             <p>{{ teacher.about }}</p>
           </div>
         </div>
@@ -31,12 +31,13 @@
             <th>Сб</th>
             <th>Вс</th>
           </tr>
+          {% set shedule = teacher.get_shedule %}
           {% for time in shedule['mon'].keys(): %}
            <tr>
             <td><span class="btn">{{ time.zfill(5) }}</span></td>
             {% for day in shedule %}
               <td>
-                {{ teacher_link(teacher, day, time, is_free) }}
+                {{ teacher_link(teacher, day, time) }}
               </td>
             {% endfor %}
            </tr>

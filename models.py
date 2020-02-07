@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 import json
 
 db = SQLAlchemy()
@@ -26,6 +27,27 @@ class Teacher(db.Model):
                             secondary="teacher_goal",
                             back_populates="teachers")
     bookings = db.relationship("Booking", back_populates="teacher")
+
+    @hybrid_property
+    def get_shedule(self):
+        return json.loads(self.shedule)
+
+    @hybrid_property
+    def short_rating(self):
+        """for some reason rating return number's like 4.9000000
+        this quick and dirty fix"""
+        return str(self.rating)[:3]
+
+    @hybrid_method
+    def set_hour_state(self, day, hour, state):
+        shedule = self.get_shedule
+        hour = f"{hour}:00"
+        shedule[day][hour] = state
+        self.shedule = json.dumps(shedule)
+
+    @hybrid_method
+    def is_free_at_the_time(self, day, hour):
+        return self.get_shedule[day][hour]
 
     def __repr__(self):
         return f"Teacher<id: {self.teacher_id}, name: {self.name}, " \

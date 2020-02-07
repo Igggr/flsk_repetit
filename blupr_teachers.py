@@ -1,7 +1,5 @@
 from flask import render_template, request, Blueprint
 from forms import NamePhoneForm, RequestMatchingTeacherForm
-import json
-import datetime
 from models import db, Teacher, Goal, RequestLesson, Booking
 
 blp = Blueprint('blp', __name__)
@@ -16,32 +14,18 @@ days = {"mon": "Понедельник",
         }
 
 
-def is_free_at_the_time(teacher, day, hour):
-    return json.loads(teacher.shedule)[day][hour]
-
-
-def availiable_now(teacher):
-    week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
-
-    now = datetime.datetime.today()
-    day = week[now.weekday()]
-    hour = f"{ now.hour // 2 * 2}:00"
-
-    return is_free_at_the_time(teacher, day, hour)
-
-
 @blp.route("/")         # покажет доступных сейчас учителей
 def index():
     teachers = Teacher.query.order_by(Teacher.rating.desc()).limit(6)
 
     return render_template("index.html",
-                           teachers=teachers)
+                           teachers=teachers, goals=Goal.query)
 
 
 @blp.route("/all/")     # покажет всех учителей
 def index_all():
     teachers = Teacher.query.order_by(Teacher.rating.desc()).limit(6)
-    return render_template("all.html", teachers=teachers)
+    return render_template("all.html", teachers=teachers, goals=Goal.query)
 
 
 @blp.route("/goals/<goal>/")
@@ -54,10 +38,8 @@ def goal_view(goal):
 @blp.route("/profiles/<int:teacher_id>/")
 def profile(teacher_id):
     teacher = Teacher.query.get(teacher_id)
-    shedule = json.loads(teacher.shedule)
     return render_template("profile.html",
-                           teacher=teacher,
-                           shedule=shedule)
+                           teacher=teacher)
 
 
 @blp.route('/booking/<int:id>/<string:day>/<string:hour>/')
@@ -86,6 +68,7 @@ def booking_done():
                  hour=hour,
                  day=day)
     db.session.add(bk)
+    teacher.set_hour_state(day, hour, False)  # теперь время - занято
     db.session.commit()
 
     return render_template("done.html",
@@ -120,8 +103,3 @@ def request_done():
         name=req.student_name,
         phone=req.student_phone
     )
-
-
-@blp.context_processor
-def utility_processor():
-    return dict(is_free=is_free_at_the_time)
