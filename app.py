@@ -8,8 +8,8 @@ from models import db
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object('config')
-    app.secret_key = os.getenv('SECRET_KEY')
+    app.config.from_object('config.DebugConfig')
+    app.secret_key = os.environ['SECRET_KEY']
 
     app.register_blueprint(blp)
 

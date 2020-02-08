@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'teachers_cards.html' import teacher_link %}
+{% from 'macros.html' import teacher_link %}
 
 {% block body %}
   <main class="container mt-3">
@@ -32,7 +32,7 @@
             <th>Вс</th>
           </tr>
           {% set shedule = teacher.get_shedule %}
-          {% for time in shedule['mon'].keys(): %}
+          {% for time in shedule['mon'].keys() %}
            <tr>
             <td><span class="btn">{{ time.zfill(5) }}</span></td>
             {% for day in shedule %}

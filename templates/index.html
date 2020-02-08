@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{%  from 'teachers_cards.html' import cards  %}
+{%  from 'macros.html' import cards  %}
 
 {% block body %}
   <main class="container mt-3">
@@ -10,21 +10,12 @@
         {% for goal in goals %}
            <a href="/goals/{{ goal.title }}/" type="button" class="btn btn-outline-secondary">⛱{{ goal.title_rus }}</a>
         {% endfor %}
-
-{#
-        <a href="/goals/travel/" type="button" class="btn btn-outline-secondary">⛱Для путешествий</a>
-        <a href="/goals/study/" type="button" class="btn btn-outline-secondary" >🏫 Для школы</a>
-        <a href="/goals/work/" type="button" class="btn btn-outline-secondary">🏢 Для работы</a>
-        <a href="/goals/relocate/" type="button" class="btn btn-outline-secondary">🚜 Для переезда</a>
-        #}
       </div>
     </div>
     </section>
-    {% block cardblock %}
-    <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
-
+    {% if only_free_now %}
+      <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
+    {% endif %}
     {{ cards(teachers) }}
-    {% endblock %}
-
   </main>
 {% endblock %}

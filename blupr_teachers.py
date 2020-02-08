@@ -14,18 +14,25 @@ days = {"mon": "Понедельник",
         }
 
 
-@blp.route("/")         # покажет доступных сейчас учителей
+@blp.route("/")
 def index():
+    """покажет не более 6 самых высокорейтинговых
+    из доступных сейчас учителей """
     teachers = Teacher.query.order_by(Teacher.rating.desc()).limit(6)
 
     return render_template("index.html",
-                           teachers=teachers, goals=Goal.query)
+                           teachers=teachers,
+                           goals=Goal.query,
+                           only_free_now=True)
 
 
-@blp.route("/all/")     # покажет всех учителей
+@blp.route("/all/")
 def index_all():
+    """покажет 6 самых высокорейтиноговых учителей"""
     teachers = Teacher.query.order_by(Teacher.rating.desc()).limit(6)
-    return render_template("all.html", teachers=teachers, goals=Goal.query)
+    return render_template("index.html",
+                           teachers=teachers,
+                           goals=Goal.query)
 
 
 @blp.route("/goals/<goal>/")
