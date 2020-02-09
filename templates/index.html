@@ -8,7 +8,7 @@
     <div class="text-center mb-5">
       <div class="btn-group mx-auto mb-0" role="group" aria-label="Basic example">
         {% for goal in goals %}
-           <a href="/goals/{{ goal.title }}/" type="button" class="btn btn-outline-secondary">⛱{{ goal.title_rus }}</a>
+           <a href="/goals/{{ goal.title }}/" type="button" class="btn btn-outline-secondary">{{ goal.favicon }}{{ goal.title_rus }}</a>
         {% endfor %}
       </div>
     </div>

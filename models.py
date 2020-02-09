@@ -56,9 +56,11 @@ class Teacher(db.Model):
 
 teacher_goal = db.Table("teacher_goal",
                         db.Column("teacher_id", db.Integer,
-                                  db.ForeignKey("teachers.teacher_id")),
+                                  db.ForeignKey("teachers.teacher_id"),
+                                  primary_key=True, nullable=False),
                         db.Column("goal_id", db.Integer,
-                                  db.ForeignKey("goals.goal_id"))
+                                  db.ForeignKey("goals.goal_id"),
+                                  primary_key=True, nullable=False)
                         )
 
 
@@ -68,6 +70,8 @@ class Goal(db.Model):
     goal_id = db.Column("goal_id", db.Integer, primary_key=True)
     title = db.Column("title", db.String(15))
     title_rus = db.Column('title_rus', db.String(15))
+    favicon = db.Column('favicon', db.String(1))
+    image_location = db.Column("image_location", db.String(30))
 
     teachers = db.relationship("Teacher",
                                secondary="teacher_goal",
@@ -79,11 +83,14 @@ class Goal(db.Model):
 
 
 class RequestLesson(db.Model):
+    __tablename__ = "request_lessons"
+
     request_id = db.Column(db.Integer, primary_key=True)
     student_name = db.Column(db.String, nullable=False)
     student_phone = db.Column(db.String, nullable=False)
     time_per_week = db.Column(db.Integer, nullable=False)
-    goal_id = db.Column(db.Integer, db.ForeignKey("goals.goal_id"))
+    goal_id = db.Column(db.Integer, db.ForeignKey("goals.goal_id"),
+                        nullable=False)
 
     goal = db.relationship("Goal", back_populates="lesson_requests")
 
@@ -95,8 +102,11 @@ class RequestLesson(db.Model):
 
 
 class Booking(db.Model):
+    __tablename__ = "bookings"
+
     booking_id = db.Column(db.Integer, primary_key=True)
-    teacher_id = db.Column(db.Integer, db.ForeignKey("teachers.teacher_id"))
+    teacher_id = db.Column(db.Integer, db.ForeignKey("teachers.teacher_id"),
+                           nullable=False)
     day = db.Column(db.String, nullable=False)
     hour = db.Column(db.Integer, nullable=False)
     student_name = db.Column(db.String, nullable=False)
