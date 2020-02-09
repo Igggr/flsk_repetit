@@ -4,7 +4,8 @@
   <main class="container mt-3">
     <div class="row mt-5">
       <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
-        <form action="{{ url_for('blp.booking_done') }}" method="post" class="card mb-3">
+        <form action=""  method="post" class="card mb-3">
+          {{ form.csrf_token }}
           <div class="card-body text-center pt-5">
             <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="">
             <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name }}</h2>
@@ -13,10 +14,10 @@
           </div>
           <hr />
           <div class="card-body mx-3">
-            {{ form.name.label(class_="mb-1 mt-2", for="clientName") }}
-            {{ form.name(class_="form-control", id="clientName") }}
-            {{ form.phone.label(class_="mb-1 mt-2", for="clientPhone") }}
-            {{ form.phone(class_="form-control", id="clientPhone") }}
+            {{ form.student_name.label(class_="mb-1 mt-2", for="clientName") }}
+            {{ form.student_name(class_="form-control", id="clientName") }}
+            {{ form.student_phone.label(class_="mb-1 mt-2", for="clientPhone") }}
+            {{ form.student_phone(class_="form-control", id="clientPhone") }}
             {{ form.submit(class_="btn btn-primary btn-block mt-4", value="Записаться на пробный урок") }}
 
             <input type="hidden" name="day" value="{{ time.day }}">

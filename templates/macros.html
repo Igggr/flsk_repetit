@@ -34,3 +34,12 @@
    </a>
   {% endif %}
 {%- endmacro %}
+
+
+{% macro render_field(field) %}
+  {{ field.label(class_="mb-1 mt-2") }}
+  {{ field(class_="form-control") }}
+  {% for error in field.errors %}
+    {{ error }}
+  {% endfor %}
+{% endmacro %}

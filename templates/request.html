@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
 
 {% block body %}
   <main class="container mt-5">
     <div class="col-12 col-sm-10 col-lg-6 offset-lg-3 offset-sm-1">
-      <form action="{{ url_for('blp.request_done') }}" method="post" class="card mb-5">
+      <form action="{{ url_for('blp.request_view') }}" method="post" class="card mb-5">
         <div class="card-body text-center pt-5">
           {{ form.csrf_token }}
           <h1 class="h3 card-title mt-4 mb-2">Подбор преподавателя</h1>
@@ -14,7 +15,7 @@
           <div class="row">
             <div class="col">
               <p>Какая цель занятий?</p>
-              {{ form.goal(class_="form-check", style="list-style-type:none") }}
+              {{ form.goal_id(class_="form-check", style="list-style-type:none") }}
               {#
                  have no idea, how to set id and class for single goal. sorry))
                  can do it only for element, containing all of them
@@ -22,16 +23,14 @@
             </div>
             <div class="col">
               <p>Сколько времени есть?</p>
-              {{ form.time(class_="form-check", style="list-style-type:none")}}
+              {{ form.time_per_week(class_="form-check", style="list-style-type:none")}}
             </div>
           </div>
         </div>
         <hr>
         <div class="card-body mx-3">
-          {{ form.name.label(class_="mb-1 mt-2") }}
-          {{ form.name(class_="form-control") }}
-          {{ form.phone.label(class_="mb-1 mt-2") }}
-          {{ form.phone(class_="form-control") }}
+          {{ render_field(form.student_name) }}
+          {{ render_field(form.student_phone) }}
           {{ form.submit(class_="btn btn-primary mt-4 mb-2", value="Найдите мне преподавателя") }}
         </div>
       </form>

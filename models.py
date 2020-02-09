@@ -117,6 +117,6 @@ class Booking(db.Model):
     def __repr__(self):
         return f"Booking<name: {self.student_name}," \
                f"phone: {self.student_phone}," \
-               f"teacher: {self.teacher.name}," \
+               f"teacher: {self.teacher}," \
                f"day: {self.day}," \
                f"hour: {self.hour}"

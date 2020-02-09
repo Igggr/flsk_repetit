@@ -7,7 +7,7 @@
 
     <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4">
       <img src ="{{ url_for('static', filename =  goal.image_location) }}">
-      <strong><br/>Преподаватели <br/>{{ goal.title_rus }}</strong>
+      <strong><br/>Преподаватели <br/>{{ goal.title_rus | lower }}</strong>
       <br/><span class="font-weight-light text-muted">{{ teachers | length }} преподавателей</span>
     </h1>
 
