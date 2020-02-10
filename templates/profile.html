@@ -13,7 +13,7 @@
               {% for goal in teacher.goals %}
                 <span class="badge badge-primary mr-2">{{ goal.title }}</span>
               {% endfor %}
-              Рейтинг: {{ teacher.short_rating }} Ставка: {{ teacher.price }} P / час</p>
+              Рейтинг: {{ teacher.rating | round(1) }} Ставка: {{ teacher.price }} P / час</p>
             <p>{{ teacher.about }}</p>
           </div>
         </div>

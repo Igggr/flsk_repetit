@@ -15,14 +15,10 @@
           <hr />
           <div class="card-body mx-3">
             {{ form.student_name.label(class_="mb-1 mt-2", for="clientName") }}
-            {{ form.student_name(class_="form-control", id="clientName") }}
+            {{ form.student_name(id="clientName") }}
             {{ form.student_phone.label(class_="mb-1 mt-2", for="clientPhone") }}
-            {{ form.student_phone(class_="form-control", id="clientPhone") }}
+            {{ form.student_phone(id="clientPhone") }}
             {{ form.submit(class_="btn btn-primary btn-block mt-4", value="Записаться на пробный урок") }}
-
-            <input type="hidden" name="day" value="{{ time.day }}">
-            <input type="hidden" name="hour" value="{{ time.hour }}">
-            <input type="hidden" name="teacher_id" value="{{ teacher.teacher_id }}">
           </div>
         </form>
       </div>

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.exc import IntegrityError
 import json
 
 db = SQLAlchemy()
@@ -10,6 +11,15 @@ shedule = {
     for day in ('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun')
 }
 shedule = json.dumps(shedule)
+
+
+class SafeSavingModel:
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
 
 
 class Teacher(db.Model):
@@ -31,12 +41,6 @@ class Teacher(db.Model):
     @hybrid_property
     def get_shedule(self):
         return json.loads(self.shedule)
-
-    @hybrid_property
-    def short_rating(self):
-        """for some reason rating return number's like 4.9000000
-        this quick and dirty fix"""
-        return str(self.rating)[:3]
 
     @hybrid_method
     def set_hour_state(self, day, hour, state):
@@ -82,7 +86,7 @@ class Goal(db.Model):
         return f"Goal<id : {self.goal_id}, title: {self.title}>"
 
 
-class RequestLesson(db.Model):
+class RequestLesson(db.Model, SafeSavingModel):
     __tablename__ = "request_lessons"
 
     request_id = db.Column(db.Integer, primary_key=True)
@@ -101,7 +105,7 @@ class RequestLesson(db.Model):
                f"goal: {self.goal.title} >"
 
 
-class Booking(db.Model):
+class Booking(db.Model, SafeSavingModel):
     __tablename__ = "bookings"
 
     booking_id = db.Column(db.Integer, primary_key=True)
