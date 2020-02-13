@@ -38,6 +38,7 @@ class RequestMatchingTeacherForm(FlaskForm):
     # so it will be single source of truth
     # now it prone to errors
     # unfortunately  can't read from database here
+    # something about context
     goal_id = RadioField("goal_id",
                          choices=[("1", "Для путешествий"),
                                   ("2", "Для учебы"),
