@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from sqlalchemy.exc import IntegrityError
 import json
+import datetime
 
 db = SQLAlchemy()
 
@@ -10,7 +11,7 @@ shedule = {
     day: {i: True for i in range(8, 24, 2)}
     for day in ('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun')
 }
-shedule = json.dumps(shedule)
+shedule = json.dumps(shedule)  # default shedule - always free
 
 
 class SafeSavingModel:
@@ -52,6 +53,16 @@ class Teacher(db.Model):
     @hybrid_method
     def is_free_at_the_time(self, day, hour):
         return self.get_shedule[day][hour]
+
+    @hybrid_method
+    def is_free_now(self):
+        days = ["mon","tue","wed","thu","sun","fri","sat"]
+        now = datetime.datetime.today()
+        hour = now.hour // 2 * 2   # need even hour - less or equal
+        hour = f"{hour}:00"
+        day = now.weekday()
+        day = days[day]
+        return self.is_free_at_the_time(day, hour)
 
     def __repr__(self):
         return f"Teacher<id: {self.teacher_id}, name: {self.name}, " \
