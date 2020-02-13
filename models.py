@@ -101,7 +101,7 @@ class RequestLesson(db.Model, SafeSavingModel):
     def __repr__(self):
         return f"RequestLesson<name: {self.student_name}," \
                f"phone: {self.student_phone}, " \
-               f"time: {self.time_per_week}, " \
+               f"time: {self.time_per_week}, "  \
                f"goal: {self.goal.title} >"
 
 

@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint
-from forms import NamePhoneForm, RequestMatchingTeacherForm
+from forms import RequestMatchingTeacherForm, BookingForm
 from models import Teacher, Goal, RequestLesson, Booking
 
 blp = Blueprint('blp', __name__)
@@ -52,10 +52,11 @@ def profile(teacher_id):
 @blp.route('/booking/<int:teacher_id>/<string:day>/<string:hour>/',
            methods=["GET", "POST"])
 def booking(teacher_id, day, hour):
-    form = NamePhoneForm()
+    form = BookingForm()
     if form.validate_on_submit():
         bk = Booking(teacher_id=teacher_id, day=day, hour=hour)
-        form.populate_obj(bk)  # student_name and student_phone
+        bk.student_name = form.contact_info.student_name.data
+        bk.student_phone = form.contact_info.student_phone.data
         teacher = Teacher.query.get(teacher_id)
         teacher.set_hour_state(day, hour, False)  # теперь время - занято
         bk.save()
@@ -81,7 +82,11 @@ def request_view():
     form = RequestMatchingTeacherForm()
     req_lesson = RequestLesson()
     if form.validate_on_submit():
-        form.populate_obj(req_lesson)
+        req_lesson.student_name = form.contact_info.student_name.data
+        req_lesson.student_phone = form.contact_info.student_phone.data
+        req_lesson.goal_id = form.goal_id.data
+        req_lesson.time_per_week = form.time_per_week.data
+        # form.populate_obj(req_lesson) # worked when i use inheritance
         req_lesson.save()
         return render_template(
             'done.html',

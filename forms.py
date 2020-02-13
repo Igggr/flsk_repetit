@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, RadioField, SubmitField
+from wtforms import StringField, RadioField, SubmitField, Form, FormField
 from wtforms.validators import DataRequired, Length, ValidationError
 import phonenumbers
 
 
-class NamePhoneForm(FlaskForm):
+class NamePhoneForm(Form):     # will not work with FlaskForm
     student_name = StringField("Вас зовут",
                                validators=[DataRequired(message="заполни")],
                                render_kw={"class": "form-control"})
@@ -27,10 +27,11 @@ class NamePhoneForm(FlaskForm):
             raise ValidationError("Некоректный номер")
 
 
-class RequestMatchingTeacherForm(NamePhoneForm):
-    # bad. I want composition, not inheritance
-    # I just doesn't know - how to get data from embeded FormField
-    # contacts = FormField(NamePhoneForm)
+class BookingForm(FlaskForm):
+    contact_info = FormField(NamePhoneForm)
+
+
+class RequestMatchingTeacherForm(FlaskForm):
 
     # want choices like that
     # [(goal.goal_id, goal.title_rus) for goal in Goal.query],
@@ -53,3 +54,5 @@ class RequestMatchingTeacherForm(NamePhoneForm):
                                         ],
                                default="1-2",
                                )
+
+    contact_info = FormField(NamePhoneForm)

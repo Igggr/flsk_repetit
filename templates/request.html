@@ -29,9 +29,9 @@
         </div>
         <hr>
         <div class="card-body mx-3">
-          {{ render_field(form.student_name) }}
-          {{ render_field(form.student_phone) }}
-          {{ form.submit(class_="btn btn-primary mt-4 mb-2", value="Найдите мне преподавателя") }}
+          {{ render_field(form.contact_info.student_name) }}
+          {{ render_field(form.contact_info.student_phone) }}
+          {{ form.contact_info.submit(class_="btn btn-primary mt-4 mb-2", value="Найдите мне преподавателя") }}
         </div>
       </form>
     </div>
