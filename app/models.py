@@ -46,7 +46,7 @@ class Teacher(db.Model):
     @hybrid_method
     def set_hour_state(self, day, hour, state):
         shedule = self.get_shedule
-        hour = f"{hour}:00"
+        hour = str(hour)
         shedule[day][hour] = state
         self.shedule = json.dumps(shedule)
 
