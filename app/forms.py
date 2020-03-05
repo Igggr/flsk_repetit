@@ -1,14 +1,16 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SubmitField, Form, FormField
+from wtforms.fields.html5 import TelField
 from wtforms.validators import DataRequired, Length, ValidationError
 import phonenumbers
+from app.models import Goal
 
 
 class NamePhoneForm(Form):     # will not work with FlaskForm
     student_name = StringField("Вас зовут",
                                validators=[DataRequired(message="заполни")],
                                render_kw={"class": "form-control"})
-    student_phone = StringField("Ваш телефон",
+    student_phone = TelField("Ваш телефон",
                                 validators=[DataRequired(message="заполни"),
                                             Length(min=6,
                                             message="должен быть > 5 символов"
@@ -39,21 +41,21 @@ class RequestMatchingTeacherForm(FlaskForm):
     # now it prone to errors
     # unfortunately  can't read from database here
     # something about context
-    goal_id = RadioField("goal_id",
-                         choices=[("1", "Для путешествий"),
-                                  ("2", "Для учебы"),
-                                  ("3", "Для работы"),
-                                  ("4", "Для переезда")
+    goal_title = RadioField("goal_id",
+                         choices=[("travel", "Для путешествий"),
+                                  ("study", "Для учебы"),
+                                  ("work", "Для работы"),
+                                  ("relocate", "Для переезда")
                                   ],
-                         default="1")
+                         default="travel")
 
     time_per_week = RadioField("time_per_week",
-                               choices=[("1-2", "1-2 часа в неделю"),
-                                        ("3-5", "3-5 часов в неделю"),
-                                        ("5-7", "5-7 часов в неделю"),
-                                        ("7-10", "7-10 часов в неделю")
+                               choices=[("1", "1-2 часа в неделю"),
+                                        ("3", "3-5 часов в неделю"),
+                                        ("5", "5-7 часов в неделю"),
+                                        ("7", "7-10 часов в неделю")
                                         ],
-                               default="1-2",
+                               default="1",
                                )
 
     contact_info = FormField(NamePhoneForm)

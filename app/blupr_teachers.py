@@ -1,6 +1,8 @@
 from flask import render_template, Blueprint
 from app.forms import RequestMatchingTeacherForm, BookingForm
 from app.models import Teacher, Goal, RequestLesson, Booking
+from wtforms import StringField, RadioField
+
 
 blp = Blueprint('blp', __name__)
 
@@ -87,9 +89,10 @@ def request_view():
     if form.validate_on_submit():
         req_lesson.student_name = form.contact_info.student_name.data
         req_lesson.student_phone = form.contact_info.student_phone.data
-        req_lesson.goal_id = form.goal_id.data
+        goal_title = form.goal_title.data
+        goal = Goal.query.filter_by(title=goal_title).first()
+        req_lesson.goal = goal
         req_lesson.time_per_week = form.time_per_week.data
-        # form.populate_obj(req_lesson) # worked when i use inheritance
         req_lesson.save()
         return render_template(
             'done.html',
