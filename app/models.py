@@ -52,14 +52,13 @@ class Teacher(db.Model):
 
     @hybrid_method
     def is_free_at_the_time(self, day, hour):
-        return self.get_shedule[day][hour]
+        return self.get_shedule[day][str(hour)]
 
     @hybrid_method
     def is_free_now(self):
         days = ["mon","tue","wed","thu","sun","fri","sat"]
         now = datetime.datetime.today()
         hour = now.hour // 2 * 2   # need even hour - less or equal
-        hour = f"{hour}:00"
         day = now.weekday()
         day = days[day]
         return self.is_free_at_the_time(day, hour)

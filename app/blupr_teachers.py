@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint
-from forms import RequestMatchingTeacherForm, BookingForm
-from models import Teacher, Goal, RequestLesson, Booking
+from app.forms import RequestMatchingTeacherForm, BookingForm
+from app.models import Teacher, Goal, RequestLesson, Booking
 
 blp = Blueprint('blp', __name__)
 

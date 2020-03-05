@@ -26,11 +26,11 @@
 {% macro teacher_link(teacher, day, time) -%}
   {% if teacher.is_free_at_the_time(day, time) %}
     <a href="/booking/{{ teacher.teacher_id }}/{{ day }}/{{ time.split(':')[0] }}/" class="btn btn-sm btn-success" >
-      {{ time.zfill(5) }}
+      {{ time.zfill(2) }}:00
     </a>
   {% else %}
    <a  class="btn btn-sm btn-secondary">
-     {{ time.zfill(5) }}
+     {{ time.zfill(2) }}:00
    </a>
   {% endif %}
 {%- endmacro %}

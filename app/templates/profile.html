@@ -34,7 +34,7 @@
           {% set shedule = teacher.get_shedule %}
           {% for time in shedule['mon'].keys() %}
            <tr>
-            <td><span class="btn">{{ time.zfill(5) }}</span></td>
+            <td><span class="btn">{{ time.zfill(2) }}:00</span></td>
             {% for day in shedule %}
               <td>
                 {{ teacher_link(teacher, day, time) }}
