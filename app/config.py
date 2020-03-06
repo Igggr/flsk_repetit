@@ -5,3 +5,4 @@ class DebugConfig:
 
 class ProdConfig(DebugConfig):
     DEBUG = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
