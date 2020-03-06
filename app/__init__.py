@@ -9,7 +9,7 @@ from app.admin import admin
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object('app.config.DebugConfig')
+    app.config.from_object('app.config.ProdConfig')
     app.secret_key = os.environ['SECRET_KEY']
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DATABASE_URL']
 

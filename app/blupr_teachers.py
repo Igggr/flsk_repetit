@@ -22,8 +22,7 @@ def index():
     из доступных сейчас учителей
 
     can't filter them in query"""
-    teachers = Teacher.query.order_by(Teacher.rating.desc())
-    teachers = [teacher for teacher in teachers if teacher.is_free_now()][:6]
+    teachers = Teacher.query.order_by(Teacher.rating.desc()).limit(6)
 
     return render_template("index.html",
                            teachers=teachers,
